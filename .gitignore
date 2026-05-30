@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables (contains API keys)
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Milvus data
+milvus_data/
+etcd_data/
+minio_data/
+
+# Logs
+*.log
