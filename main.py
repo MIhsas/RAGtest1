@@ -10,8 +10,14 @@ RAG 项目主入口
     python main.py status                  查看系统状态
 """
 
+import io
 import sys
 from pathlib import Path
+
+# Windows 下强制 UTF-8 输出，避免 emoji 编码报错
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 sys.path.insert(0, str(Path(__file__).parent))
 

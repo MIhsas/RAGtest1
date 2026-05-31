@@ -46,7 +46,7 @@ class Settings(BaseSettings):
     retrieval_top_k: int = 8
 
     # ── Rerank 重排序 ─────────────────────────────────────────
-    rerank_model: str = "gte-rerank"
+    rerank_model: str = "gte-rerank-v2"
     rerank_top_n: int = 3
 
     # ── BM25 关键词检索 ───────────────────────────────────────

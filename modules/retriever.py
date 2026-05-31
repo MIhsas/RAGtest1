@@ -59,7 +59,10 @@ class HybridRetriever:
 
         # ── Rerank 精排 ──
         if use_rerank and len(fused) > k:
-            fused = self._reranker.rerank(query, fused)
+            try:
+                fused = self._reranker.rerank(query, fused)
+            except Exception as e:
+                print(f"   ⚠️  Rerank 失败，跳过: {e}")
 
         return fused[:k]
 

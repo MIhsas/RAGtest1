@@ -31,5 +31,12 @@ milvus_data/
 etcd_data/
 minio_data/
 
+# Documents data files
+documents/*
+!documents/.gitkeep
+
+# Chat history
+chat_history/
+
 # Logs
 *.log
