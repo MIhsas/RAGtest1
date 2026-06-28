@@ -6,14 +6,13 @@
 
 | 功能 | 说明 |
 |------|------|
-| 📄 多格式文档加载 | PDF、Word (.docx)、TXT、Markdown |
-| ✂️ 智能文本切割 | 中英文递归分割，512 字符/块，128 字符重叠 |
-| 🧮 向量嵌入 | DashScope text-embedding-v4（1024 维） |
-| 🗄️ 向量存储 | Milvus 向量数据库 |
-| 🔍 多路召回 | 向量检索 + BM25 关键词检索，RRF 融合 |
-| 🎯 Rerank 重排序 | DashScope gte-rerank-v2 精排 |
-| 💬 多轮对话 | 带记忆的连续对话，滑动窗口 10 轮 |
-| 🌐 Web 前端 | Gradio 界面，支持聊天和文件上传 |
+| 多格式文档加载 | PDF、Word (.docx)、TXT、Markdown |
+| 智能文本切割 | 中英文递归分割，512 字符/块，128 字符重叠 |
+| 向量嵌入 | DashScope text-embedding-v4（1024 维） |
+| 向量存储 | Milvus 向量数据库 |
+| 多路召回 | 向量检索 + BM25 关键词检索，RRF 融合 |
+| Rerank 重排序 | DashScope gte-rerank-v2 精排 |
+| 多轮对话 | 带记忆的连续对话，滑动窗口 10 轮 |
 
 ## 技术栈
 
@@ -24,7 +23,6 @@
 | 重排序 | [DashScope gte-rerank-v2](https://dashscope.aliyun.com/) |
 | 关键词检索 | [jieba](https://github.com/fxsjy/jieba) + [rank_bm25](https://github.com/dorianbrown/rank_bm25) |
 | 大语言模型 | [DeepSeek-v4-pro](https://platform.deepseek.com/) |
-| 前端 | [Gradio](https://www.gradio.app/) |
 | 编排 | [LangChain](https://langchain.com/) |
 
 ## 使用方法
@@ -41,14 +39,12 @@ uv run python main.py ingest
 # ── 单次问答 ──
 uv run python main.py query '转专业成绩要求'
 
-# ── 多轮对话（退出自动保存记录）──
+# ── 多轮对话 ──
 uv run python main.py chat
 
 # ── 查看历史对话 ──
 uv run python main.py history
 
-# ── 启动 Web 前端 ──
-uv run python main.py web
 
 # ── 查看系统状态 ──
 uv run python main.py status
@@ -61,7 +57,6 @@ RAG/
 ├── main.py              # CLI 入口
 ├── data_processor.py    # 数据处理模块
 ├── query.py             # 检索问答
-├── web_ui.py            # Web 前端
 ├── config.py            # 配置管理
 ├── documents/           # 放入文件即可摄入
 ├── modules/
@@ -79,32 +74,32 @@ RAG/
 ## 系统架构
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                        数据摄入流程                             │
-│                                                                │
+┌─────────────────────────────────────────────────────────────────────┐
+│                        数据摄入流程                                  │
+│                                                                     │
 │  documents/ 文件夹 ──▶ 加载 ──▶ 清洗 ──▶ 切割 ──▶ 嵌入 ──▶ Milvus │
-└────────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────────┘
 
-┌────────────────────────────────────────────────────────────────┐
-│                        问答检索流程                             │
-│                                                                │
-│  用户问题 ──┬──▶ 向量检索 (Milvus) ──┐                         │
+┌─────────────────────────────────────────────────────────────────┐
+│                        问答检索流程                              │
+│                                                                 │
+│  用户问题 ──┬──▶ 向量检索 (Milvus) ──┐                           │
 │             │                        ├──▶ RRF 融合 ──▶ Rerank  │
-│             └──▶ BM25 关键词检索 ────┘              │          │
-│                                                     ▼          │
-│  对话历史 ──▶ 注入 Prompt ◀── 上下文 ◀── Top-N 文档            │
-│                     │                                          │
-│                     ▼                                          │
-│             DeepSeek 生成回答                                   │
-└────────────────────────────────────────────────────────────────┘
+│             └──▶ BM25 关键词检索 ────┘              │           │
+│                                                     ▼           │
+│  对话历史 ──▶ 注入 Prompt ◀── 上下文 ◀── Top-N 文档             │
+│                     │                                           │
+│                     ▼                                           │
+│             DeepSeek 生成回答                                    │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## 配置说明
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `DASHSCOPE_API_KEY` | — | DashScope API 密钥（必填） |
-| `DEEPSEEK_API_KEY` | — | DeepSeek API 密钥（必填） |
+| `DASHSCOPE_API_KEY` | — | DashScope API 密钥|
+| `DEEPSEEK_API_KEY` | — | DeepSeek API 密钥|
 | `EMBEDDING_MODEL` | `text-embedding-v4` | 嵌入模型 |
 | `DEEPSEEK_MODEL` | `deepseek-v4-pro` | LLM 模型 |
 | `RERANK_MODEL` | `gte-rerank-v2` | Rerank 模型 |
