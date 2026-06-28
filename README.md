@@ -2,7 +2,7 @@
 
 本项目只是一次对RAG的简单尝试，有些地方并未优化好，仅作为一次备份提交至仓库
 
-基于 **Milvus + DashScope + DeepSeek** 的检索增强生成（RAG）系统，支持多轮对话、Rerank 重排序、多路召回和 Web 前端。
+基于 **Milvus + DashScope + DeepSeek** 的检索增强生成（RAG）系统，支持多轮对话、Rerank 重排序、多路召回。
 
 ## 核心功能
 
